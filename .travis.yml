@@ -3,7 +3,5 @@ node_js:
   - node
 before_install:
   - npm install -g codecov
-install:
-  - npm ci
 after_script:
   - codecov
