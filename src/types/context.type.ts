@@ -2,6 +2,7 @@ import * as Knex from 'knex'
 
 export type Context = {
   db: Knex
+  userId: number | null
 }
 
 export type Db = Knex

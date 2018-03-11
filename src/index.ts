@@ -1,14 +1,39 @@
 import { graphqlExpress } from 'apollo-server-express'
 import { json } from 'body-parser'
 import * as express from 'express'
+import * as jwt from 'express-jwt'
+import * as jwksRsa from 'jwks-rsa'
 import * as Raven from 'raven'
 import { engineSetup } from './engine'
 import { Context } from './types/context.type'
 import { connect } from './database'
 import { config } from './config'
 import { schema } from './root-schema'
+import { extractUserId } from './util'
+import { UnauthorizedError } from './custom-error'
+
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://episodehunter.auth0.com/.well-known/jwks.json`
+  }),
+  credentialsRequired: false,
+
+  // Validate the audience and the issuer.
+  audience: 'https://api.episodehunter.tv',
+  issuer: 'https://episodehunter.auth0.com/',
+  algorithms: ['RS256']
+})
 
 function formatError(error: any) {
+  if (error.originalError instanceof UnauthorizedError) {
+    return {
+      message: error.originalError.message,
+      code: error.originalError.name
+    }
+  }
   const errorId = Math.random()
   const errorObj = {
     errorId,
@@ -49,10 +74,12 @@ app.get('/', (req, res) => {
 app.use(
   '/graphql',
   json({ limit: '100kb' }),
-  graphqlExpress(req => ({
+  checkJwt,
+  graphqlExpress((req: any) => ({
     schema,
     context: {
-      db: connect()
+      db: connect(),
+      userId: extractUserId(req.user)
     } as Context,
     formatError,
     tracing: true,

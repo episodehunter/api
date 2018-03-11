@@ -11,3 +11,16 @@ export function safeMap<T, R>(arr: T[], map: (arg: T) => R): R[] {
   }
   return []
 }
+
+export function extractUserId(user?: { sub?: string }): number | null {
+  if (
+    !user ||
+    !user.sub ||
+    typeof user.sub !== 'string' ||
+    !user.sub.startsWith('auth0|')
+  ) {
+    return null
+  }
+  const id = Number(user.sub.split('auth0|')[1])
+  return isNaN(id) ? null : id
+}

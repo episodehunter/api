@@ -2,11 +2,15 @@ import { Context } from './types/context.type'
 import { getFollowingShowByUser, findShow } from './show/show.db'
 import { Show } from './root-type'
 import { findAllEpisodesForShowInDb } from './episode/episode.db'
+import { UnauthorizedError } from './custom-error'
 
 export const RootResolver = {
   RootQuery: {
     following(obj: void, args: void, context: Context) {
-      return getFollowingShowByUser(context.db, 2)
+      if (!context.userId) {
+        throw new UnauthorizedError()
+      }
+      return getFollowingShowByUser(context.db, context.userId)
     },
 
     show(obj: void, args: { id: number }, context: Context) {
