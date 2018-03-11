@@ -4,13 +4,13 @@ import * as express from 'express'
 import * as jwt from 'express-jwt'
 import * as jwksRsa from 'jwks-rsa'
 import * as Raven from 'raven'
-import { engineSetup } from './engine'
 import { Context } from './types/context.type'
 import { connect } from './database'
 import { config } from './config'
 import { schema } from './root-schema'
 import { extractUserId } from './util'
 import { UnauthorizedError } from './custom-error'
+import { engineStart } from './engine'
 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
@@ -58,8 +58,6 @@ function formatError(error: any) {
 
 const app = express()
 
-engineSetup(app)
-
 if (!config.inDevelopMode) {
   Raven.config(`https://${config.raven.dsn}@sentry.io/${config.raven.project}`, {
     autoBreadcrumbs: false
@@ -97,6 +95,10 @@ app.use((err: any, req: any, res: any, next: any) => {
 })
 
 const hostname = 'localhost'
-app.listen(config.port, hostname, () => {
-  console.log(`Running a GraphQL API server at ${hostname}:${config.port}/graphql`)
-})
+if (config.inDevelopMode) {
+  app.listen(config.port, hostname, () => {
+    console.log(`Running a GraphQL API server at ${hostname}:${config.port}/graphql`)
+  })
+} else {
+  engineStart(hostname, app)
+}

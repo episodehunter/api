@@ -1,15 +1,22 @@
 import { config } from './config'
 
-export function engineSetup(app) {
-  if (!config.inDevelopMode) {
-    const { Engine } = require('apollo-engine')
-    const engine = new Engine({
-      engineConfig: {
-        apiKey: process.env.APOLLO_ENGINE_API_KEY
-      },
-      graphqlPort: config.port
-    })
-    engine.start()
-    app.use(engine.expressMiddleware())
-  }
+export function engineStart(hostname, app) {
+  const { ApolloEngine } = require('apollo-engine')
+  const engine = new ApolloEngine({
+    apiKey: process.env.APOLLO_ENGINE_API_KEY
+  })
+  engine.listen(
+    {
+      port: config.port,
+      host: hostname,
+      graphqlPaths: ['/graphql'],
+      expressApp: app,
+      launcherOptions: {
+        startupTimeout: 3000
+      }
+    },
+    () => {
+      console.log(`Running a GraphQL API server at ${hostname}:${config.port}/graphql`)
+    }
+  )
 }
