@@ -4,6 +4,7 @@ import * as express from 'express'
 import * as jwt from 'express-jwt'
 import * as jwksRsa from 'jwks-rsa'
 import * as Raven from 'raven'
+import * as cors from 'cors'
 import { Context } from './types/context.type'
 import { connect } from './database'
 import { config } from './config'
@@ -71,6 +72,7 @@ app.get('/', (req, res) => {
 
 app.use(
   '/graphql',
+  cors(),
   json({ limit: '100kb' }),
   checkJwt,
   graphqlExpress((req: any) => ({
