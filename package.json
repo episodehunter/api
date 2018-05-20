@@ -28,16 +28,16 @@
     "raven": "^2.4.2"
   },
   "devDependencies": {
-    "@types/express": "^4.11.1",
-    "@types/graphql": "^0.12.4",
-    "@types/jest": "*",
-    "@types/knex": "^0.14.8",
-    "@types/node": "^9.4.7",
-    "@types/ramda": "^0.25.20",
-    "@types/raven": "^2.1.6",
-    "jest": "*",
-    "ts-jest": "*",
-    "typescript": "*"
+    "@types/express": "4.11.1",
+    "@types/graphql": "0.12.4",
+    "@types/jest": "22.2.0",
+    "@types/knex": "0.14.8",
+    "@types/node": "9.4.7",
+    "@types/ramda": "0.25.20",
+    "@types/raven": "2.1.6",
+    "jest": "22.4.2",
+    "ts-jest": "22.4.1",
+    "typescript": "2.7.2"
   },
   "homepage": "https://github.com/episodehunter/api",
   "keywords": [
