@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/express": "4.11.1",
     "@types/graphql": "0.13.1",
-    "@types/jest": "22.2.0",
+    "@types/jest": "22.2.3",
     "@types/knex": "0.14.8",
     "@types/node": "9.4.7",
     "@types/ramda": "0.25.20",
