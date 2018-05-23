@@ -36,7 +36,7 @@
     "@types/ramda": "0.25.29",
     "@types/raven": "2.5.1",
     "jest": "22.4.2",
-    "ts-jest": "22.4.1",
+    "ts-jest": "22.4.6",
     "typescript": "2.7.2"
   },
   "homepage": "https://github.com/episodehunter/api",
