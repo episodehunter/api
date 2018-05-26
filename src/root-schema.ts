@@ -4,6 +4,7 @@ import { RootResolver } from './root-resolver'
 const SchemaDefinition = `
   schema {
     query: RootQuery
+    mutation: RootMutation
   }
 `
 
@@ -17,6 +18,13 @@ const RootQuery = `
     watchedEpisodes: [WatchedEpisode]
     history(page: Int): [History]
     popularShows(since: Int!): [Show]
+  }
+`
+
+const RootMutation = `
+  type RootMutation {
+    checkInEpisode(episode: WatchedEpisodeInput!): Boolean
+    checkInSeason(episodes: [WatchedEpisodeInput]!): Boolean
   }
 `
 
@@ -63,11 +71,18 @@ const Definitions = `
   }
 
   type WatchedEpisode {
-    serieId: Int!,
+    showId: Int!,
     season: Int!,
     episode: Int!,
     time: Int!,
     type: WatchedEnum!
+  }
+
+  input WatchedEpisodeInput {
+    showId: Int!,
+    season: Int!,
+    episode: Int!,
+    time: Int!
   }
 
   type History {
@@ -78,7 +93,7 @@ const Definitions = `
 `
 
 export const schema = makeExecutableSchema({
-  typeDefs: [SchemaDefinition, RootQuery, Definitions],
+  typeDefs: [SchemaDefinition, RootQuery, RootMutation, Definitions],
   resolvers: RootResolver as any,
   allowUndefinedInResolve: false
 })

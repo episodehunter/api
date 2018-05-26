@@ -43,7 +43,7 @@ export enum WatchedEnum {
 }
 
 export interface WatchedEpisode {
-  serieId: number
+  showId: number
   season: number
   episode: number
   time: number

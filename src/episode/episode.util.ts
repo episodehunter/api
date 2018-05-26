@@ -2,7 +2,8 @@ import {
   EpisodeDatabaseType,
   Episode,
   WatchedEpisode,
-  WatchedEpisodeDatabaseType
+  WatchedEpisodeDatabaseType,
+  WatchedEnum
 } from '../root-type'
 
 export function mapDatabaseEpisodeToDefinition(episode: EpisodeDatabaseType): Episode {
@@ -22,10 +23,23 @@ export function mapDatabaseWatchedEpisodeToDefinition(
   watchedEpisode: WatchedEpisodeDatabaseType
 ): WatchedEpisode {
   return {
-    serieId: watchedEpisode.serie_id,
+    showId: watchedEpisode.serie_id,
     season: watchedEpisode.season,
     episode: watchedEpisode.episode,
     time: watchedEpisode.time,
     type: watchedEpisode.type
+  }
+}
+
+export function mapWatchedEpisodeToDatabase(
+  watchedEpisode: WatchedEpisode,
+  type: WatchedEnum
+): WatchedEpisodeDatabaseType {
+  return {
+    serie_id: watchedEpisode.showId,
+    season: watchedEpisode.season,
+    episode: watchedEpisode.episode,
+    time: watchedEpisode.time,
+    type
   }
 }

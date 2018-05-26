@@ -7,7 +7,9 @@ import {
 import { Show, WatchedEpisode, WatchedEnum } from './root-type'
 import {
   findAllEpisodesForShowInDb,
-  findAllWatchedEpisodesForShowInDb
+  findAllWatchedEpisodesForShowInDb,
+  checkInEpisode,
+  checkInSeason
 } from './episode/episode.db'
 import { assertUserId } from './util'
 
@@ -45,6 +47,21 @@ export const RootResolver = {
 
     popularShows(obj: void, args: { showId?: number }, context: Context) {
       return null
+    }
+  },
+
+  RootMutation: {
+    checkInEpisode: (obj: void, args: { episode: WatchedEpisode }, context: Context) => {
+      assertUserId(context.userId)
+      return checkInEpisode(context.db, context.userId, args.episode)
+    },
+    checkInSeason: (
+      obj: void,
+      args: { episodes: WatchedEpisode[] },
+      context: Context
+    ) => {
+      assertUserId(context.userId)
+      return checkInSeason(context.db, context.userId, args.episodes)
     }
   },
 

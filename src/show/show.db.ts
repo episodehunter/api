@@ -34,3 +34,11 @@ export function findShow(db: Db, id: number): Promise<Show> {
       return mapDatabaseShowToDefinition(show)
     }) as any
 }
+
+export function doShowExist(db: Db, id: number): Promise<boolean> {
+  return db
+    .first('id')
+    .from(showTableName)
+    .where({ id })
+    .then(show => Boolean(show && show.id)) as any
+}
