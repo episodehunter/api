@@ -34,7 +34,7 @@ export interface Rating {
   userRating: number
 }
 
-enum WatchedEnum {
+export enum WatchedEnum {
   kodiScrobble,
   kodiSync,
   checkIn,
@@ -66,6 +66,14 @@ export type EpisodeDatabaseType = {
   first_aired: string
   overview: string
   lastupdated: number
+}
+
+export type WatchedEpisodeDatabaseType = {
+  serie_id: number
+  season: number
+  episode: number
+  time: number
+  type: WatchedEnum
 }
 
 export type ShowDatabaseType = {

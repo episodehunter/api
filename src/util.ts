@@ -1,3 +1,5 @@
+import { UnauthorizedError } from './custom-error'
+
 export function safeStringSplit(str: string | null | undefined, key: string): string[] {
   if (!str || !str.split) {
     return []
@@ -23,4 +25,10 @@ export function extractUserId(user?: { sub?: string }): number | null {
   }
   const id = Number(user.sub.split('auth0|')[1])
   return isNaN(id) ? null : id
+}
+
+export function assertUserId(userId: number) {
+  if (!userId) {
+    throw new UnauthorizedError()
+  }
 }
