@@ -73,7 +73,7 @@ app.get('/', (req, res) => {
 app.use(
   '/graphql',
   cors(),
-  json({ limit: '100kb' }),
+  json({ limit: '5kb' }),
   checkJwt,
   graphqlExpress((req: any) => ({
     schema,
