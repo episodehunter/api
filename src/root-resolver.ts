@@ -1,5 +1,9 @@
 import { Context } from './types/context.type'
-import { getFollowingShowByUser, findShow } from './show/show.db'
+import {
+  getFollowingShowByUser,
+  findShow,
+  getNumberOfShowFollowers
+} from './show/show.db'
 import { Show } from './root-type'
 import { findAllEpisodesForShowInDb } from './episode/episode.db'
 import { UnauthorizedError } from './custom-error'
@@ -15,6 +19,10 @@ export const RootResolver = {
 
     show(obj: void, args: { id: number }, context: Context) {
       return findShow(context.db, args.id)
+    },
+
+    numberOfShowFollowers(obj: void, args: { showId: number }, context: Context) {
+      return getNumberOfShowFollowers(context.db, args.showId)
     },
 
     showRating(obj: void, args: { showId: number }, context: Context) {

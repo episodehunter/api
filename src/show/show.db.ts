@@ -15,6 +15,13 @@ export function getFollowingShowByUser(db: Db, userId: number): Promise<Show[]> 
     .then(shows => safeMap(shows, mapDatabaseShowToDefinition)) as any
 }
 
+export function getNumberOfShowFollowers(db: Db, showId: number): Promise<number> {
+  return db(followingTableName)
+    .count('id as c')
+    .where('show_id', showId)
+    .then(([{ c }]) => c) as any
+}
+
 export function findShow(db: Db, id: number): Promise<Show> {
   return db
     .first(`*`)

@@ -10,6 +10,7 @@ const SchemaDefinition = `
 const RootQuery = `
   type RootQuery {
     show(id: Int!): Show
+    numberOfShowFollowers(showId: Int!): Int
     showRating(showId: Int!): Rating
     ratings(page: Int): [Rating]
     following: [Show]
