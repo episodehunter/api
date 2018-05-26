@@ -61,6 +61,7 @@ export const RootResolver = {
       return checkInSeason(context.db, context.userId, args.episodes)
     },
     rateShow(obj: void, args: { showId: number; rating: number }, context: Context) {
+      assertUserId(context.userId)
       return rateShow(context.db, args.showId, context.userId, args.rating)
     }
   },
