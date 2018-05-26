@@ -65,9 +65,10 @@ const Definitions = `
   }
 
   enum WatchedEnum {
-    kodiSync,
     kodiScrobble,
-    manuallySync,
+    kodiSync,
+    checkIn,
+    checkInSeason,
     plexScrobble
   }
 
