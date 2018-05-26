@@ -29,7 +29,7 @@ export interface Episode {
 }
 
 export interface Rating {
-  total: number
+  rating: number
   count: number
   userRating: number
 }

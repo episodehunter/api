@@ -12,6 +12,7 @@ import {
   checkInSeason
 } from './episode/episode.db'
 import { assertUserId } from './util'
+import { getShowRating, rateShow } from './rating/rating'
 
 export const RootResolver = {
   RootQuery: {
@@ -29,7 +30,7 @@ export const RootResolver = {
     },
 
     showRating(obj: void, args: { showId: number }, context: Context) {
-      return null
+      return getShowRating(context.db, args.showId, context.userId)
     },
 
     ratings(obj: void, args: { page?: number }, context: Context) {
@@ -51,17 +52,16 @@ export const RootResolver = {
   },
 
   RootMutation: {
-    checkInEpisode: (obj: void, args: { episode: WatchedEpisode }, context: Context) => {
+    checkInEpisode(obj: void, args: { episode: WatchedEpisode }, context: Context) {
       assertUserId(context.userId)
       return checkInEpisode(context.db, context.userId, args.episode)
     },
-    checkInSeason: (
-      obj: void,
-      args: { episodes: WatchedEpisode[] },
-      context: Context
-    ) => {
+    checkInSeason(obj: void, args: { episodes: WatchedEpisode[] }, context: Context) {
       assertUserId(context.userId)
       return checkInSeason(context.db, context.userId, args.episodes)
+    },
+    rateShow(obj: void, args: { showId: number; rating: number }, context: Context) {
+      return rateShow(context.db, args.showId, context.userId, args.rating)
     }
   },
 

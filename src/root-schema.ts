@@ -25,6 +25,7 @@ const RootMutation = `
   type RootMutation {
     checkInEpisode(episode: WatchedEpisodeInput!): Boolean
     checkInSeason(episodes: [WatchedEpisodeInput]!): Boolean
+    rateShow(showId: Int!, rating: Int!): Boolean
   }
 `
 
@@ -58,7 +59,7 @@ const Definitions = `
   }
 
   type Rating {
-    total: Float!,
+    rating: Float,
     count: Int!,
     userRating: Int
   }
