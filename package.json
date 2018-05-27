@@ -73,5 +73,23 @@
       "<rootDir>/root-schema.ts",
       "<rootDir>/root-type.ts"
     ]
+  },
+  "now": {
+    "name": "episodehunter-api",
+    "alias": "episodehunter-api",
+    "files": [
+      "dist"
+    ],
+    "env": {
+      "EH_DB_HOST": "@eh-db-host",
+      "EH_DB_USERNAME": "@eh-db-username",
+      "EH_DB_PASSWORD": "@eh-db-password",
+      "EH_DB_DATABASE": "@eh-db-database",
+      "EH_DB_PORT": "@eh-db-port",
+      "EH_RAVEN_DSN": "@eh-raven-dsn",
+      "EH_RAVEN_PROJECT": "@eh-raven-project",
+      "APOLLO_ENGINE_API_KEY": "@athena-api-apollo-engine-api-key",
+      "NODE_ENV": "production"
+    }
   }
 }
