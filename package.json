@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "jest",
+    "build": "tsc",
     "compile": "tsc --watch",
     "start": "node dist/index.js",
     "start:dev": "NODE_ENV=develop node --inspect dist/index.js"
@@ -73,5 +74,17 @@
       "<rootDir>/root-schema.ts",
       "<rootDir>/root-type.ts"
     ]
+  },
+  "now": {
+    "env": {
+      "EH_DB_HOST": "@eh-db-host",
+      "EH_DB_USERNAME": "@eh-db-username",
+      "EH_DB_PASSWORD": "@eh-db-password",
+      "EH_DB_DATABASE": "@eh-db-database",
+      "EH_DB_PORT": "@eh-db-port",
+      "EH_RAVEN_DSN": "@eh-raven-dsn",
+      "EH_RAVEN_PROJECT": "@eh-raven-project",
+      "NODE_ENV": "production"
+    }
   }
 }
