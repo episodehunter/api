@@ -17,6 +17,11 @@ export interface Show {
   episodes?: Episode[]
 }
 
+export interface HollowShow {
+  id: number
+  name: string
+}
+
 export interface Episode {
   id: number
   tvdbId: number

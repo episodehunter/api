@@ -2,7 +2,8 @@ import { Context } from './types/context.type'
 import {
   getFollowingShowByUser,
   findShow,
-  getNumberOfShowFollowers
+  getNumberOfShowFollowers,
+  getHollowShows
 } from './show/show.db'
 import { Show, WatchedEpisode, WatchedEnum } from './root-type'
 import {
@@ -23,6 +24,10 @@ export const RootResolver = {
 
     show(obj: void, args: { id: number }, context: Context) {
       return findShow(context.db, args.id)
+    },
+
+    hollowShows(obj: void, args: void, context: Context) {
+      return getHollowShows(context.db)
     },
 
     numberOfShowFollowers(obj: void, args: { showId: number }, context: Context) {

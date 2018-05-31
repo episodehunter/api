@@ -1,7 +1,7 @@
 import { Db } from '../types/context.type'
 import { mapDatabaseShowToDefinition } from './show.util'
 import { safeMap } from '../util'
-import { Show } from '../root-type'
+import { Show, HollowShow } from '../root-type'
 
 const followingTableName = 'tv_follow'
 const showTableName = 'tv_show'
@@ -33,6 +33,10 @@ export function findShow(db: Db, id: number): Promise<Show> {
       }
       return mapDatabaseShowToDefinition(show)
     }) as any
+}
+
+export function getHollowShows(db: Db): Promise<HollowShow> {
+  return db.select('id', 'name').from(showTableName) as any
 }
 
 export function doShowExist(db: Db, id: number): Promise<boolean> {

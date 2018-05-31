@@ -11,6 +11,7 @@ const SchemaDefinition = `
 const RootQuery = `
   type RootQuery {
     show(id: Int!): Show
+    hollowShows: [HollowShow]
     numberOfShowFollowers(showId: Int!): Int
     showRating(showId: Int!): Rating
     ratings(page: Int): [Rating]
@@ -45,6 +46,11 @@ const Definitions = `
     runtime: Int,
     ended: Boolean,
     episodes: [Episode]
+  }
+
+  type HollowShow {
+    id: Int!,
+    name: String!
   }
 
   type Episode {
