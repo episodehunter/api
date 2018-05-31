@@ -11,7 +11,6 @@ import { config } from './config'
 import { schema } from './root-schema'
 import { extractUserId } from './util'
 import { UnauthorizedError } from './custom-error'
-import { engineStart } from './engine'
 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
@@ -82,7 +81,7 @@ app.use(
       userId: extractUserId(req.user)
     } as Context,
     formatError,
-    tracing: true,
+    tracing: false,
     cacheControl: false
   }))
 )
@@ -97,10 +96,6 @@ app.use((err: any, req: any, res: any, next: any) => {
 })
 
 const hostname = 'localhost'
-if (config.inDevelopMode) {
-  app.listen(config.port, hostname, () => {
-    console.log(`Running a GraphQL API server at ${hostname}:${config.port}/graphql`)
-  })
-} else {
-  engineStart(hostname, app)
-}
+app.listen(config.port, hostname, () => {
+  console.log(`Running a GraphQL API server at ${hostname}:${config.port}/graphql`)
+})
