@@ -15,7 +15,7 @@ const RootQuery = `
     showRating(showId: Int!): Rating
     ratings(page: Int): [Rating]
     following: [Show]
-    watchedEpisodes: [WatchedEpisode]
+    watchedEpisodes(showId: Int!): [WatchedEpisode]
     history(page: Int): [History]
     popularShows(since: Int!): [Show]
   }

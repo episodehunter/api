@@ -21,12 +21,14 @@ export function findAllEpisodesForShowInDb(db: Db, showId: number): Promise<Epis
 
 export function findAllWatchedEpisodesForShowInDb(
   db: Db,
+  showId: number,
   userId: number
 ): Promise<WatchedEpisode[]> {
   return db
     .select('serie_id', 'season', 'episode', 'type', 'time')
     .from(watchedTableName)
     .where('user_id', userId)
+    .andWhere('serie_id', showId)
     .then(watched => safeMap(watched, mapDatabaseWatchedEpisodeToDefinition)) as any
 }
 

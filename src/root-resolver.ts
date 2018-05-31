@@ -37,9 +37,9 @@ export const RootResolver = {
       return null
     },
 
-    watchedEpisodes(obj: void, args: void, context: Context) {
+    watchedEpisodes(obj: void, args: { showId: number }, context: Context) {
       assertUserId(context.userId)
-      return findAllWatchedEpisodesForShowInDb(context.db, context.userId)
+      return findAllWatchedEpisodesForShowInDb(context.db, args.showId, context.userId)
     },
 
     history(obj: void, args: { showId?: number }, context: Context) {
