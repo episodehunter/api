@@ -14,20 +14,14 @@ export function safeMap<T, R>(arr: T[], map: (arg: T) => R): R[] {
   return []
 }
 
-export function extractUserId(user?: { sub?: string }): number | null {
-  if (
-    !user ||
-    !user.sub ||
-    typeof user.sub !== 'string' ||
-    !user.sub.startsWith('auth0|')
-  ) {
+export function extractUserId(user?: { id?: string }): string | null {
+  if (!user || typeof user.id !== 'string') {
     return null
   }
-  const id = Number(user.sub.split('auth0|')[1])
-  return isNaN(id) ? null : id
+  return user.id
 }
 
-export function assertUserId(userId: number) {
+export function assertUserId(userId: string) {
   if (!userId) {
     throw new UnauthorizedError()
   }

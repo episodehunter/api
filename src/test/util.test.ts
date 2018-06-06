@@ -36,7 +36,7 @@ describe('Extract user id', () => {
     expect(result).toBe(null)
   })
 
-  test('Missing sub', () => {
+  test('Missing id', () => {
     // Arrange
     const user = {}
 
@@ -47,31 +47,9 @@ describe('Extract user id', () => {
     expect(result).toBe(null)
   })
 
-  test('Sub is not a string', () => {
+  test('Id is not a string', () => {
     // Arrange
-    const user = { sub: 1 }
-
-    // Act
-    const result = extractUserId(user as any)
-
-    // Assert
-    expect(result).toBe(null)
-  })
-
-  test('Sub is not comming from auth0', () => {
-    // Arrange
-    const user = { sub: '1' }
-
-    // Act
-    const result = extractUserId(user as any)
-
-    // Assert
-    expect(result).toBe(null)
-  })
-
-  test('Invalid id', () => {
-    // Arrange
-    const user = { sub: 'auth0|some-id' }
+    const user = { id: 1 }
 
     // Act
     const result = extractUserId(user as any)
@@ -82,13 +60,13 @@ describe('Extract user id', () => {
 
   test('Extract id', () => {
     // Arrange
-    const user = { sub: 'auth0|5' }
+    const user = { id: '5' }
 
     // Act
     const result = extractUserId(user as any)
 
     // Assert
-    expect(result).toBe(5)
+    expect(result).toBe('5')
   })
 })
 

@@ -6,7 +6,7 @@ import { Show, HollowShow } from '../root-type'
 const followingTableName = 'tv_follow'
 const showTableName = 'tv_show'
 
-export function getFollowingShowByUser(db: Db, userId: number): Promise<Show[]> {
+export function getFollowingShowByUser(db: Db, userId: string): Promise<Show[]> {
   return db
     .select(`${showTableName}.*`)
     .from(followingTableName)

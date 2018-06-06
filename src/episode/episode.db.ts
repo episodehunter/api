@@ -22,7 +22,7 @@ export function findAllEpisodesForShowInDb(db: Db, showId: number): Promise<Epis
 export function findAllWatchedEpisodesForShowInDb(
   db: Db,
   showId: number,
-  userId: number
+  userId: string
 ): Promise<WatchedEpisode[]> {
   return db
     .select('serie_id', 'season', 'episode', 'type', 'time')
@@ -32,7 +32,7 @@ export function findAllWatchedEpisodesForShowInDb(
     .then(watched => safeMap(watched, mapDatabaseWatchedEpisodeToDefinition)) as any
 }
 
-export function checkInEpisode(db: Db, userId: number, episode: WatchedEpisode) {
+export function checkInEpisode(db: Db, userId: string, episode: WatchedEpisode) {
   return doShowExist(db, episode.showId).then(exist => {
     if (!exist) {
       return
@@ -47,7 +47,7 @@ export function checkInEpisode(db: Db, userId: number, episode: WatchedEpisode) 
   })
 }
 
-export function checkInSeason(db: Db, userId: number, episodes: WatchedEpisode[]) {
+export function checkInSeason(db: Db, userId: string, episodes: WatchedEpisode[]) {
   const showId = episodes[0].showId
   const episodesOfSameShow = episodes.filter(e => e.showId === showId)
   return doShowExist(db, showId).then(exist => {

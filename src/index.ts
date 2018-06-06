@@ -1,8 +1,6 @@
 import { graphqlExpress } from 'apollo-server-express'
 import { json } from 'body-parser'
 import * as express from 'express'
-import * as jwt from 'express-jwt'
-import * as jwksRsa from 'jwks-rsa'
 import * as Raven from 'raven'
 import * as cors from 'cors'
 import { Context } from './types/context.type'
@@ -11,21 +9,7 @@ import { config } from './config'
 import { schema } from './root-schema'
 import { extractUserId } from './util'
 import { UnauthorizedError } from './custom-error'
-
-const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://episodehunter.auth0.com/.well-known/jwks.json`
-  }),
-  credentialsRequired: false,
-
-  // Validate the audience and the issuer.
-  audience: 'https://api.episodehunter.tv',
-  issuer: 'https://episodehunter.auth0.com/',
-  algorithms: ['RS256']
-})
+import { checkJwt } from './auth'
 
 function formatError(error: any) {
   if (error.originalError instanceof UnauthorizedError) {

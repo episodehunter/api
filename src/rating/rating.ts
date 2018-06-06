@@ -17,7 +17,7 @@ function getRatingForShow(
 function getUserRatingForShow(
   db: Db,
   showId: number,
-  userId: number
+  userId: string
 ): Promise<number | null> {
   return db
     .first('rating')
@@ -26,7 +26,7 @@ function getUserRatingForShow(
     .then(rating => (rating ? rating.rating : null)) as any
 }
 
-export function getShowRating(db: Db, showId: number, userId?: number): Promise<Rating> {
+export function getShowRating(db: Db, showId: number, userId?: string): Promise<Rating> {
   const gettingRatingForShow = getRatingForShow(db, showId)
   const gettingUserRatingForShow = userId
     ? getUserRatingForShow(db, showId, userId)
@@ -46,7 +46,7 @@ export function getShowRating(db: Db, showId: number, userId?: number): Promise<
 export function rateShow(
   db: Db,
   showId: number,
-  userId: number,
+  userId: string,
   rating: number
 ): Promise<boolean> {
   if (rating < 1 || rating > 10) {
