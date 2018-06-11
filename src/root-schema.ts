@@ -50,7 +50,8 @@ const Definitions = `
 
   type HollowShow {
     id: Int!,
-    name: String!
+    name: String!,
+    tvdbId: Int!
   }
 
   type Episode {

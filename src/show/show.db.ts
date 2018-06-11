@@ -36,7 +36,7 @@ export function findShow(db: Db, id: number): Promise<Show> {
 }
 
 export function getHollowShows(db: Db): Promise<HollowShow> {
-  return db.select('id', 'name').from(showTableName) as any
+  return db.select('id', 'name', 'tvdb_id as tvdbId').from(showTableName) as any
 }
 
 export function doShowExist(db: Db, id: number): Promise<boolean> {
