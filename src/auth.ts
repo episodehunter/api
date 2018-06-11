@@ -1,10 +1,4 @@
 import * as admin from 'firebase-admin'
-const serviceAccount = require('../firebase-key.json')
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://newagent-dc3d1.firebaseio.com'
-})
 
 const getToken = (req: { headers: { authorization?: string } }): string | null => {
   if (req.headers && req.headers.authorization) {
@@ -32,8 +26,9 @@ export const checkJwt = (req, res, next: () => void) => {
         next()
       })
       .catch(error => {
-        console.error(error)
         res.status(401).send()
       })
   }
 }
+
+export const checkJwtDev = (req, res, next: () => void) => next()

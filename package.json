@@ -88,6 +88,7 @@
       "EH_RAVEN_DSN": "@eh-raven-dsn",
       "EH_RAVEN_PROJECT": "@eh-raven-project",
       "APOLLO_ENGINE_API_KEY": "@athena-api-apollo-engine-api-key",
+      "FIREBASE_KEY": "@firebase-key",
       "NODE_ENV": "production"
     }
   }

@@ -1,15 +1,16 @@
 import { graphqlExpress } from 'apollo-server-express'
 import { json } from 'body-parser'
-import * as express from 'express'
-import * as Raven from 'raven'
 import * as cors from 'cors'
-import { Context } from './types/context.type'
-import { connect } from './database'
+import * as express from 'express'
+import * as admin from 'firebase-admin'
+import * as Raven from 'raven'
+import { checkJwt, checkJwtDev } from './auth'
 import { config } from './config'
-import { schema } from './root-schema'
-import { extractUserId } from './util'
 import { UnauthorizedError } from './custom-error'
-import { checkJwt } from './auth'
+import { connect } from './database'
+import { schema } from './root-schema'
+import { Context } from './types/context.type'
+import { extractUserId } from './util'
 
 function formatError(error: any) {
   if (error.originalError instanceof UnauthorizedError) {
@@ -41,8 +42,13 @@ function formatError(error: any) {
 }
 
 const app = express()
+const authCheck = config.inDevelopMode ? checkJwtDev : checkJwt
 
 if (!config.inDevelopMode) {
+  admin.initializeApp({
+    credential: admin.credential.cert(config.firebaseKey),
+    databaseURL: 'https://newagent-dc3d1.firebaseio.com'
+  })
   Raven.config(`https://${config.raven.dsn}@sentry.io/${config.raven.project}`, {
     autoBreadcrumbs: false
   }).install()
@@ -57,7 +63,7 @@ app.use(
   '/graphql',
   cors(),
   json({ limit: '5kb' }),
-  checkJwt,
+  authCheck,
   graphqlExpress((req: any) => ({
     schema,
     context: {
