@@ -76,8 +76,7 @@
     "name": "episodehunter-api",
     "alias": "devapi.episodehunter.tv",
     "files": [
-      "dist",
-      "firebase-key.json"
+      "dist"
     ],
     "env": {
       "EH_DB_HOST": "@eh-db-host",

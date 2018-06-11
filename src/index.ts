@@ -45,8 +45,9 @@ const app = express()
 const authCheck = config.inDevelopMode ? checkJwtDev : checkJwt
 
 if (!config.inDevelopMode) {
+  const firebaseKey = JSON.parse(Buffer.from(config.firebaseKey64, 'base64').toString())
   admin.initializeApp({
-    credential: admin.credential.cert(config.firebaseKey),
+    credential: admin.credential.cert(firebaseKey),
     databaseURL: 'https://newagent-dc3d1.firebaseio.com'
   })
   Raven.config(`https://${config.raven.dsn}@sentry.io/${config.raven.project}`, {
