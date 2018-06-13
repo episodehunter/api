@@ -30,7 +30,7 @@
     "@types/graphql": "0.13.1",
     "@types/jest": "23.1.0",
     "@types/knex": "0.14.14",
-    "@types/node": "10.1.2",
+    "@types/node": "10.3.3",
     "@types/ramda": "0.25.29",
     "@types/raven": "2.5.1",
     "jest": "23.1.0",
