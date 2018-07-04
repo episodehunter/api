@@ -26,7 +26,7 @@ export function getGetUserEpisodeHistory(db: Db): GetUserEpisodeHistory {
 export async function getUserEpisodeHistoryPage(
   userId: string,
   offset = 0,
-  limit = 20,
+  limit = 100,
   getUserEpisodeHistory: GetUserEpisodeHistory
 ): Promise<WatchedEpisodePage> {
   const safeLimit = Math.max(Math.min(limit, 100), 0)
