@@ -31,4 +31,11 @@ export const checkJwt = (req, res, next: () => void) => {
   }
 }
 
-export const checkJwtDev = (req, res, next: () => void) => next()
+export const checkJwtDev = (req, res, next: () => void) => {
+  if (req.headers && req.headers.authorization) {
+    req.user = {
+      id: '2'
+    }
+  }
+  next()
+}
