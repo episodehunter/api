@@ -6,52 +6,40 @@ import { mapDatabaseWatchedEpisodeToDefinition } from '../episode/episode.util'
 
 type GetUserEpisodeHistory = (
   userId: string,
-  after: number,
+  offset: number,
   limit: number
 ) => Promise<WatchedEpisode[]>
 
 export function getGetUserEpisodeHistory(db: Db): GetUserEpisodeHistory {
-  return (userId, after, limit) => {
-    let baseQuery = db
+  return (userId, offset, limit) => {
+    return db
       .select('id', 'serie_id', 'season', 'episode', 'type', 'time')
       .from(watchedTableName)
       .where('user_id', userId)
       .orderBy('time', 'desc')
+      .offset(offset)
       .limit(limit)
-
-    if (after) {
-      baseQuery = baseQuery.where('id', '>', after)
-    }
-
-    return baseQuery.then(watched =>
-      safeMap(watched, mapDatabaseWatchedEpisodeToDefinition)
-    ) as any
+      .then(watched => safeMap(watched, mapDatabaseWatchedEpisodeToDefinition)) as any
   }
 }
 
 export async function getUserEpisodeHistoryPage(
   userId: string,
-  after: number,
-  first = 20,
+  offset = 0,
+  limit = 20,
   getUserEpisodeHistory: GetUserEpisodeHistory
 ): Promise<WatchedEpisodePage> {
-  const limit = Math.min(first | 0, 20)
-  const history = await getUserEpisodeHistory(userId, after, limit + 1)
-  const hasNextPage = history.length > first
-  history.shift() // Remove the extra element
-  const lastCursor = getLastCursor(history)
+  const safeLimit = Math.max(Math.min(limit, 100), 0)
+  const safeOffset = Math.max(Math.min(offset, 1e5), 0)
+  const history = await getUserEpisodeHistory(userId, safeOffset, safeLimit + 1)
+  const hasNextPage = history.length > safeLimit
+  if (hasNextPage) {
+    history.pop() // Remove the extra element
+  }
   return {
     pageInfo: {
-      hasNextPage,
-      lastCursor
+      hasNextPage
     },
     episodes: history
   }
-}
-
-export function getLastCursor(history: WatchedEpisode[]): number | null {
-  if (history.length > 0) {
-    return history[0].id
-  }
-  return null
 }

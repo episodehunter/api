@@ -33,7 +33,9 @@
     "@types/node": "10.3.3",
     "@types/ramda": "0.25.33",
     "@types/raven": "2.5.1",
+    "chain-spy": "^1.0.0",
     "jest": "23.1.0",
+    "simple-spy": "^2.2.1",
     "ts-jest": "22.4.6",
     "typescript": "2.9.2"
   },

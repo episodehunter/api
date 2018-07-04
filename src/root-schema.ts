@@ -19,7 +19,7 @@ const RootQuery = `
     watchedEpisodes(showId: Int!): [WatchedEpisode]
     history(page: Int): [History]
     popularShows(since: Int!): [Show]
-    episodeHistory(after: Int, first: Int): WatchedEpisodePage
+    episodeHistory(offset: Int, limit: Int): WatchedEpisodePage
   }
 `
 
@@ -107,7 +107,6 @@ const Definitions = `
   }
 
   type PageInfo {
-    lastCursor: Int
     hasNextPage: Boolean!
   }
 `

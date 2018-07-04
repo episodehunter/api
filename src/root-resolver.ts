@@ -58,14 +58,14 @@ export const RootResolver = {
 
     episodeHistory(
       obj: void,
-      args: { after?: number; first?: number },
+      args: { offset?: number; limit?: number },
       context: Context
     ) {
       assertUserId(context.userId)
       return getUserEpisodeHistoryPage(
         context.userId,
-        args.after,
-        args.first,
+        args.offset,
+        args.limit,
         getGetUserEpisodeHistory(context.db)
       )
     }

@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select user episode history 1`] = `
+Array [
+  Object {
+    "name": "select",
+    "type": "get",
+  },
+  Object {
+    "args": Array [
+      "id",
+      "serie_id",
+      "season",
+      "episode",
+      "type",
+      "time",
+    ],
+    "type": "apply",
+  },
+  Object {
+    "name": "from",
+    "type": "get",
+  },
+  Object {
+    "args": Array [
+      "tv_watched",
+    ],
+    "type": "apply",
+  },
+  Object {
+    "name": "where",
+    "type": "get",
+  },
+  Object {
+    "args": Array [
+      "user_id",
+      "1",
+    ],
+    "type": "apply",
+  },
+  Object {
+    "name": "orderBy",
+    "type": "get",
+  },
+  Object {
+    "args": Array [
+      "time",
+      "desc",
+    ],
+    "type": "apply",
+  },
+  Object {
+    "name": "offset",
+    "type": "get",
+  },
+  Object {
+    "args": Array [
+      1,
+    ],
+    "type": "apply",
+  },
+  Object {
+    "name": "limit",
+    "type": "get",
+  },
+  Object {
+    "args": Array [
+      2,
+    ],
+    "type": "apply",
+  },
+  Object {
+    "name": "then",
+    "type": "get",
+  },
+  Object {
+    "args": Array [
+      [Function],
+    ],
+    "type": "apply",
+  },
+]
+`;
