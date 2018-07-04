@@ -14,6 +14,7 @@ import {
 } from './episode/episode.db'
 import { assertUserId } from './util'
 import { getShowRating, rateShow } from './rating/rating'
+import { getUserEpisodeHistoryPage, getGetUserEpisodeHistory } from './history/history.db'
 
 export const RootResolver = {
   RootQuery: {
@@ -53,6 +54,20 @@ export const RootResolver = {
 
     popularShows(obj: void, args: { showId?: number }, context: Context) {
       return null
+    },
+
+    episodeHistory(
+      obj: void,
+      args: { after?: number; first?: number },
+      context: Context
+    ) {
+      assertUserId(context.userId)
+      return getUserEpisodeHistoryPage(
+        context.userId,
+        args.after,
+        args.first,
+        getGetUserEpisodeHistory(context.db)
+      )
     }
   },
 

@@ -1,8 +1,7 @@
 import { Db } from '../types/context.type'
 import { Rating } from '../root-type'
 import { doShowExist } from '../show/show.db'
-
-const showRatingTableName = 'tv_rating'
+import { showRatingTableName } from '../tables';
 
 function getRatingForShow(
   db: Db,

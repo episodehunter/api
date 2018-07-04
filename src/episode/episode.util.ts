@@ -23,6 +23,7 @@ export function mapDatabaseWatchedEpisodeToDefinition(
   watchedEpisode: WatchedEpisodeDatabaseType
 ): WatchedEpisode {
   return {
+    id: watchedEpisode.id,
     showId: watchedEpisode.serie_id,
     season: watchedEpisode.season,
     episode: watchedEpisode.episode,

@@ -2,9 +2,7 @@ import { Db } from '../types/context.type'
 import { mapDatabaseShowToDefinition } from './show.util'
 import { safeMap } from '../util'
 import { Show, HollowShow } from '../root-type'
-
-const followingTableName = 'tv_follow'
-const showTableName = 'tv_show'
+import { showTableName, followingTableName } from '../tables';
 
 export function getFollowingShowByUser(db: Db, userId: string): Promise<Show[]> {
   return db

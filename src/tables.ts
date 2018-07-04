@@ -1,0 +1,5 @@
+export const episodeTableName = 'tv_episode'
+export const watchedTableName = 'tv_watched'
+export const showRatingTableName = 'tv_rating'
+export const followingTableName = 'tv_follow'
+export const showTableName = 'tv_show'

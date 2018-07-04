@@ -7,9 +7,7 @@ import {
   mapWatchedEpisodeToDatabase
 } from './episode.util'
 import { doShowExist } from '../show/show.db'
-
-const episodeTableName = 'tv_episode'
-const watchedTableName = 'tv_watched'
+import { episodeTableName, watchedTableName } from '../tables';
 
 export function findAllEpisodesForShowInDb(db: Db, showId: number): Promise<Episode[]> {
   return db

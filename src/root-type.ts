@@ -48,6 +48,7 @@ export enum WatchedEnum {
 }
 
 export interface WatchedEpisode {
+  id?: number
   showId: number
   season: number
   episode: number
@@ -74,6 +75,7 @@ export type EpisodeDatabaseType = {
 }
 
 export type WatchedEpisodeDatabaseType = {
+  id?: number
   serie_id: number
   season: number
   episode: number
@@ -96,4 +98,14 @@ export type ShowDatabaseType = {
   runtime: number
   status: ShowStatusType
   lastupdate: number
+}
+
+export type WatchedEpisodePage = {
+  pageInfo: PageInfo
+  episodes: WatchedEpisode[]
+}
+
+export type PageInfo = {
+  lastCursor: number | null
+  hasNextPage: boolean
 }
