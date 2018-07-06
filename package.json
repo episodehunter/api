@@ -30,7 +30,7 @@
     "@types/graphql": "0.13.3",
     "@types/jest": "23.1.4",
     "@types/knex": "0.14.15",
-    "@types/node": "10.5.1",
+    "@types/node": "10.5.2",
     "@types/raven": "2.5.1",
     "chain-spy": "1.0.0",
     "jest": "23.3.0",
