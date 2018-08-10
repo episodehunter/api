@@ -33,7 +33,7 @@
     "@types/node": "10.5.6",
     "@types/raven": "2.5.1",
     "chain-spy": "1.0.0",
-    "jest": "23.4.0",
+    "jest": "23.5.0",
     "simple-spy": "2.2.1",
     "ts-jest": "23.0.0",
     "typescript": "2.9.2"
