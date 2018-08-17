@@ -7,7 +7,7 @@ import {
   mapWatchedEpisodeToDatabase
 } from './episode.util'
 import { doShowExist } from '../show/show.db'
-import { episodeTableName, watchedTableName } from '../tables';
+import { episodeTableName, watchedTableName } from '../tables'
 
 export function findAllEpisodesForShowInDb(db: Db, showId: number): Promise<Episode[]> {
   return db
@@ -43,6 +43,18 @@ export function checkInEpisode(db: Db, userId: string, episode: WatchedEpisode) 
       )
       .then(() => true)
   })
+}
+
+export function unwatchEpisode(db: Db, userId: string, episode: WatchedEpisode) {
+  return db(watchedTableName)
+    .where({
+      user_id: userId,
+      serie_id: episode.showId,
+      season: episode.season,
+      episode: episode.episode
+    })
+    .delete()
+    .then(() => true)
 }
 
 export function checkInSeason(db: Db, userId: string, episodes: WatchedEpisode[]) {

@@ -10,7 +10,8 @@ import {
   findAllEpisodesForShowInDb,
   findAllWatchedEpisodesForShowInDb,
   checkInEpisode,
-  checkInSeason
+  checkInSeason,
+  unwatchEpisode
 } from './episode/episode.db'
 import { assertUserId } from './util'
 import { getShowRating, rateShow } from './rating/rating'
@@ -79,6 +80,10 @@ export const RootResolver = {
     checkInSeason(obj: void, args: { episodes: WatchedEpisode[] }, context: Context) {
       assertUserId(context.userId)
       return checkInSeason(context.db, context.userId, args.episodes)
+    },
+    unwatchEpisode(obj: void, args: { episode: WatchedEpisode }, context: Context) {
+      assertUserId(context.userId)
+      return unwatchEpisode(context.db, context.userId, args.episode)
     },
     rateShow(obj: void, args: { showId: number; rating: number }, context: Context) {
       assertUserId(context.userId)
