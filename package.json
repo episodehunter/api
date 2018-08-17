@@ -76,7 +76,9 @@
     "name": "episodehunter-api",
     "alias": "devapi.episodehunter.tv",
     "files": [
-      "dist"
+      "dist",
+      "package.json",
+      "package-lock.json"
     ],
     "env": {
       "EH_DB_HOST": "@eh-db-host",
