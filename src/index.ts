@@ -1,48 +1,34 @@
-import { graphqlExpress } from 'apollo-server-express'
+import { ApolloServer } from 'apollo-server-express'
 import { json } from 'body-parser'
-import * as cors from 'cors'
 import * as express from 'express'
 import * as admin from 'firebase-admin'
 import * as Raven from 'raven'
 import { checkJwt, checkJwtDev } from './auth'
 import { config } from './config'
-import { UnauthorizedError } from './custom-error'
 import { connect } from './database'
 import { schema } from './root-schema'
 import { Context } from './types/context.type'
 import { extractUserId } from './util'
+import { formatError } from './format-error'
 
-function formatError(error: any) {
-  if (error.originalError instanceof UnauthorizedError) {
-    return {
-      message: error.originalError.message,
-      code: error.originalError.name
-    }
-  }
-  const errorId = Math.random()
-  const errorObj = {
-    errorId,
-    code: (error.originalError && error.originalError.name) || 'Error',
-    message: error.message,
-    locations: error.locations,
-    stack: error.stack,
-    path: error.path
-  }
-  console.error(errorObj)
-
-  if (config.inDevelopMode) {
-    return errorObj
-  }
-  Raven.captureException(error.orginalError || errorObj)
-  return {
-    message: error.message || 'This was bad',
-    errorId,
-    code: (error.originalError && error.originalError.name) || 'Error'
-  }
-}
+const graphqlPath = '/graphql'
+const authCheck = config.inDevelopMode ? checkJwtDev : checkJwt
+const createContext = ({ req }) =>
+  ({
+    db: connect(),
+    userId: extractUserId(req.user)
+  } as Context)
 
 const app = express()
-const authCheck = config.inDevelopMode ? checkJwtDev : checkJwt
+app.use(graphqlPath, json({ limit: '5kb' }), authCheck)
+
+new ApolloServer({
+  schema,
+  context: createContext,
+  tracing: false,
+  cacheControl: false,
+  formatError
+}).applyMiddleware({ app, cors: true, path: graphqlPath })
 
 if (!config.inDevelopMode) {
   const firebaseKey = JSON.parse(Buffer.from(config.firebaseKey64, 'base64').toString())
@@ -60,23 +46,6 @@ app.get('/', (req, res) => {
   res.send('Episodehunter api')
 })
 
-app.use(
-  '/graphql',
-  cors(),
-  json({ limit: '5kb' }),
-  authCheck,
-  graphqlExpress((req: any) => ({
-    schema,
-    context: {
-      db: connect(),
-      userId: extractUserId(req.user)
-    } as Context,
-    formatError,
-    tracing: false,
-    cacheControl: false
-  }))
-)
-
 app.use(Raven.errorHandler())
 
 app.use((err: any, req: any, res: any, next: any) => {
@@ -88,5 +57,5 @@ app.use((err: any, req: any, res: any, next: any) => {
 
 const hostname = 'localhost'
 app.listen(config.port, hostname, () => {
-  console.log(`Running a GraphQL API server at ${hostname}:${config.port}/graphql`)
+  console.log(`Running a GraphQL API server at ${hostname}:${config.port}${graphqlPath}`)
 })
