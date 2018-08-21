@@ -1,7 +1,6 @@
 all: deploy
 
-compile:
-	rm -r dist
+compile: clean
 	npx tsc
 
 deploy: compile
@@ -9,4 +8,3 @@ deploy: compile
 
 clean:
 	rm -r dist
-	rm -r node_modules

@@ -29,6 +29,8 @@ const RootMutation = `
     checkInSeason(episodes: [WatchedEpisodeInput]!): Boolean
     unwatchEpisode(episode: UnwatchedEpisodeInput!): Boolean
     rateShow(showId: Int!, rating: Int!): Boolean
+    followShow(showId: Int!): Boolean
+    unfollowShow(showId: Int!): Boolean
   }
 `
 

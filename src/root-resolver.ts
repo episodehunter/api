@@ -3,7 +3,9 @@ import {
   getFollowingShowByUser,
   findShow,
   getNumberOfShowFollowers,
-  getHollowShows
+  getHollowShows,
+  followShow,
+  unfollowShow
 } from './show/show.db'
 import { Show, WatchedEpisode, WatchedEnum } from './root-type'
 import {
@@ -88,6 +90,14 @@ export const RootResolver = {
     rateShow(obj: void, args: { showId: number; rating: number }, context: Context) {
       assertUserId(context.userId)
       return rateShow(context.db, args.showId, context.userId, args.rating)
+    },
+    followShow(obj: void, args: { showId: number }, context: Context) {
+      assertUserId(context.userId)
+      return followShow(context.db, context.userId, args.showId)
+    },
+    unfollowShow(obj: void, args: { showId: number }, context: Context) {
+      assertUserId(context.userId)
+      return unfollowShow(context.db, context.userId, args.showId)
     }
   },
 
