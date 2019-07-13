@@ -20,7 +20,7 @@
     "firebase-admin": "^6.0.0",
     "graphql": "^0.13.2",
     "graphql-tools": "^3.1.1",
-    "knex": "^0.15.2",
+    "knex": "^0.19.0",
     "mysql": "^2.16.0",
     "raven": "^2.6.3"
   },
@@ -28,7 +28,7 @@
     "@types/express": "^4.16.0",
     "@types/graphql": "^0.13.4",
     "@types/jest": "^23.1.5",
-    "@types/knex": "^0.14.21",
+    "@types/knex": "^0.15.0",
     "@types/node": "^10.5.6",
     "@types/raven": "^2.5.1",
     "chain-spy": "^1.0.0",
